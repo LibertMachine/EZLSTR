@@ -59,7 +59,47 @@
       gap: 50px;
       align-items: center;
     }
+<section id="app">
+  <h2 class="section-title">Create a Listing</h2>
 
+  <div class="app-builder">
+    <div class="card">
+      <label>Item Photos</label>
+      <input type="file" id="photos" multiple accept="image/*">
+
+      <label>Item Title</label>
+      <input type="text" id="title" placeholder="Vintage Nike Windbreaker">
+
+      <label>Price</label>
+      <input type="number" id="price" placeholder="42">
+
+      <label>Description</label>
+      <textarea id="description" placeholder="Describe condition, size, flaws, brand, color, etc."></textarea>
+
+      <label>Platforms</label>
+      <div class="checks">
+        <label><input type="checkbox" value="eBay"> eBay</label>
+        <label><input type="checkbox" value="Facebook"> Facebook</label>
+        <label><input type="checkbox" value="Mercari"> Mercari</label>
+        <label><input type="checkbox" value="Etsy"> Etsy</label>
+      </div>
+
+      <button class="btn btn-primary" onclick="saveListing()">Save Listing</button>
+    </div>
+
+    <div class="card">
+      <h3>Listing Preview</h3>
+      <div id="previewPhotos" class="preview-photos"></div>
+      <h2 id="previewTitle">Your item title</h2>
+      <p id="previewPrice">$0</p>
+      <p id="previewDescription">Your description will appear here.</p>
+      <p id="previewPlatforms">Platforms: none selected</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">Inventory</h2>
+  <div id="inventory"></div>
+</section>
     .eyebrow {
       color: #38bdf8;
       text-transform: uppercase;
