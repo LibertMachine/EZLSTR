@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EZ-LSTR | List Once. Sell Everywhere.</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0f1720;
+      color: #f8fafc;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .nav {
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      background: rgba(15,23,32,.9);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: .05em;
+    }
+
+    .logo span { color: #38bdf8; }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      color: #cbd5e1;
+      font-size: .95rem;
+    }
+
+    .hero {
+      max-width: 1200px;
+      margin: auto;
+      padding: 90px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: #38bdf8;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-weight: 800;
+      font-size: .8rem;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 6vw, 5.8rem);
+      line-height: .9;
+      margin: 0 0 24px;
+      letter-spacing: -.06em;
+    }
+
+    .lead {
+      color: #cbd5e1;
+      font-size: 1.25rem;
+      max-width: 580px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 24px;
+      border-radius: 14px;
+      font-weight: 900;
+      border: 1px solid rgba(255,255,255,.15);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #38bdf8, #22c55e);
+      color: #07111c;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.05);
+      color: #f8fafc;
+    }
+
+    .app-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.35);
+    }
+
+    .mockup {
+      background: #111827;
+      border-radius: 22px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .photo {
+      aspect-ratio: 1;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #334155, #1e293b);
+      display: grid;
+      place-items: center;
+      color: #94a3b8;
+      font-weight: bold;
+    }
+
+    .field {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px;
+      padding: 12px;
+      color: #cbd5e1;
+      margin-bottom: 10px;
+    }
+
+    section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 70px 24px;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1;
+      margin: 0 0 18px;
+    }
+
+    .section-copy {
+      color: #cbd5e1;
+      max-width: 760px;
+      font-size: 1.1rem;
+      margin-bottom: 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 22px;
+      padding: 24px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #f8fafc;
+    }
+
+    .card p {
+      color: #cbd5e1;
+      margin-bottom: 0;
+    }
+
+    .highlight {
+      background: linear-gradient(135deg, rgba(56,189,248,.16), rgba(34,197,94,.12));
+      border-top: 1px solid rgba(255,255,255,.12);
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      max-width: none;
+    }
+
+    .highlight-inner {
+      max-width: 1200px;
+      margin: auto;
+      padding: 70px 24px;
+    }
+
+    .steps {
+      display: grid;
+      gap: 14px;
+      max-width: 800px;
+    }
+
+    .step {
+      padding: 18px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      color: #cbd5e1;
+    }
+
+    .step strong {
+      color: #38bdf8;
+    }
+
+    .cta {
+      text-align: center;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 30px;
+      padding: 48px 24px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      color: #94a3b8;
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+
+    @media (max-width: 850px) {
+      .hero,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 55px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="logo">EZ-<span>LSTR</span></div>
+
+      <div class="nav-links">
+        <a href="#how">How It Works</a>
+        <a href="#inventory">Inventory Sync</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#early-access">Early Access</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Marketplace listing made simple</div>
+
+        <h1>List once. Sell everywhere.</h1>
+
+        <p class="lead">
+          EZ-LSTR helps resellers create one listing and push it across multiple marketplaces —
+          with one inventory system keeping everything organized.
+        </p>
+
+        <div class="buttons">
+          <a class="btn btn-primary" href="#early-access">Join Early Access →</a>
+          <a class="btn btn-secondary" href="#how">See How It Works</a>
+        </div>
+      </div>
+
+      <div class="app-card">
+        <div class="mockup">
+          <div class="photo-grid">
+            <div class="photo">Photo</div>
+            <div class="photo">Photo</div>
+            <div class="photo">Photo</div>
+          </div>
+
+          <div class="field">Title: Vintage Nike Windbreaker</div>
+          <div class="field">Price: $42.00</div>
+          <div class="field">Description generated and ready to edit...</div>
+          <div class="field">Platforms: eBay · Mercari · Etsy · Facebook</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <h2 class="section-title">One listing. Multiple marketplaces.</h2>
+      <p class="section-copy">
+        Stop rewriting the same listing over and over. EZ-LSTR gives sellers one simple workflow
+        for photos, titles, descriptions, pricing, and marketplace posting.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Upload Photos</h3>
+          <p>Take product photos once and keep them attached to one master listing.</p>
+        </div>
+
+        <div class="card">
+          <h3>Write Once</h3>
+          <p>Create one title, description, condition note, price, and shipping detail.</p>
+        </div>
+
+        <div class="card">
+          <h3>Publish Faster</h3>
+          <p>Export or publish your listing to the platforms where your buyers already shop.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="inventory" class="highlight">
+      <div class="highlight-inner">
+        <h2 class="section-title">The killer feature: inventory sync.</h2>
+
+        <p class="section-copy">
+          When an item sells on one marketplace, EZ-LSTR helps prevent the nightmare of selling
+          the same item twice somewhere else.
+        </p>
+
+        <div class="steps">
+          <div class="step"><strong>1.</strong> Item sells on eBay.</div>
+          <div class="step"><strong>2.</strong> EZ-LSTR marks the item as sold.</div>
+          <div class="step"><strong>3.</strong> Matching listings are removed or flagged on other platforms.</div>
+          <div class="step"><strong>4.</strong> No more “Sorry, it already sold.”</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <h2 class="section-title">Built for casual sellers and power resellers.</h2>
+      <p class="section-copy">
+        Start simple. Grow into a full reseller operating system.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Starter</h3>
+          <p>For casual sellers testing the idea.</p>
+          <h2>Free</h2>
+          <p>Limited listings per month.</p>
+        </div>
+
+        <div class="card">
+          <h3>Seller</h3>
+          <p>For side hustlers and garage sale flippers.</p>
+          <h2>$19/mo</h2>
+          <p>More listings, templates, and exports.</p>
+        </div>
+
+        <div class="card">
+          <h3>Power Seller</h3>
+          <p>For serious resellers managing inventory daily.</p>
+          <h2>$49/mo</h2>
+          <p>Inventory sync, dashboard, and advanced tools.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="early-access">
+      <div class="cta">
+        <h2 class="section-title">Get early access to EZ-LSTR.</h2>
+        <p class="section-copy" style="margin-left:auto;margin-right:auto;">
+          Be first in line when the tool is ready for beta sellers.
+        </p>
+
+        <div class="buttons" style="justify-content:center;">
+          <a class="btn btn-primary" href="mailto:hello@ez-lstr.com">Request Early Access →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 EZ-LSTR · List Once. Sell Everywhere.
+  </footer>
+
+</body>
+</html>
