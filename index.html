@@ -89,7 +89,11 @@
       gap: 56px;
       align-items: center;
     }
-
+.hero-brand img {
+  height: 60px;
+  width: auto;
+  margin-bottom: 24px;
+}
     .eyebrow {
       color: var(--green);
       text-transform: uppercase;
@@ -147,7 +151,15 @@
       background: rgba(255,255,255,.05);
       color: var(--text);
     }
+.btn-secondary {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,.2);
+}
 
+.btn-secondary:hover {
+  background: rgba(255,255,255,.05);
+}
     .demo-card {
       background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
       border: 1px solid rgba(94,234,212,.18);
@@ -368,18 +380,17 @@
     <section class="hero">
       <div>
         <div class="eyebrow">Inventory sync for modern resellers</div>
+<div class="hero-brand">
+  <img src="syncell-logo.png" alt="SynCell">
+</div>
+      <h1>Never sell the same item twice.</h1>
 
-        <h1>
-          Never sell<br>
-          the same item<br>
-          <span class="gradient-text">twice.</span>
-        </h1>
-
-        <p class="lead">
-          SynCell helps resellers list products across marketplaces and automatically
-          keep inventory synchronized when something sells.
-        </p>
-
+<p class="lead">
+When an item sells on eBay, SynCell automatically updates
+Facebook Marketplace, Etsy, Mercari, and more.
+No duplicate sales. No manual inventory updates.
+</p>  
+      <a class="btn btn-primary" href="#waitlist"> Join Early Access </a> <a class="btn btn-secondary" href="#demo"> See How It Works </a>  
         <div class="buttons">
           <a class="btn btn-primary" href="#app">Try the Prototype →</a>
           <a class="btn btn-secondary" href="#sync">See Inventory Sync</a>
