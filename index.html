@@ -7,7 +7,68 @@
 
   <style>
     * { box-sizing: border-box; }
+.app-builder {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
 
+label {
+  display: block;
+  margin-top: 14px;
+  margin-bottom: 6px;
+  font-weight: 800;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  color: white;
+}
+
+textarea {
+  min-height: 120px;
+}
+
+.checks label {
+  font-weight: 500;
+}
+
+.preview-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.preview-photos img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.inventory-item {
+  margin-top: 14px;
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+.sold {
+  opacity: .45;
+  text-decoration: line-through;
+}
+
+@media (max-width: 850px) {
+  .app-builder {
+    grid-template-columns: 1fr;
+  }
+}
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
@@ -436,6 +497,102 @@
   <footer>
     © 2026 EZ-LSTR · List Once. Sell Everywhere.
   </footer>
+<script>
+  const title = document.getElementById("title");
+  const price = document.getElementById("price");
+  const description = document.getElementById("description");
+  const photos = document.getElementById("photos");
 
+  const previewTitle = document.getElementById("previewTitle");
+  const previewPrice = document.getElementById("previewPrice");
+  const previewDescription = document.getElementById("previewDescription");
+  const previewPlatforms = document.getElementById("previewPlatforms");
+  const previewPhotos = document.getElementById("previewPhotos");
+  const inventory = document.getElementById("inventory");
+
+  let savedListings = JSON.parse(localStorage.getItem("ezListings")) || [];
+
+  function updatePreview() {
+    previewTitle.textContent = title.value || "Your item title";
+    previewPrice.textContent = "$" + (price.value || "0");
+    previewDescription.textContent = description.value || "Your description will appear here.";
+
+    const platforms = [...document.querySelectorAll(".checks input:checked")]
+      .map(box => box.value);
+
+    previewPlatforms.textContent = "Platforms: " + (platforms.join(", ") || "none selected");
+  }
+
+  function previewImages() {
+    previewPhotos.innerHTML = "";
+
+    [...photos.files].slice(0, 6).forEach(file => {
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(file);
+      previewPhotos.appendChild(img);
+    });
+  }
+
+  function saveListing() {
+    const platforms = [...document.querySelectorAll(".checks input:checked")]
+      .map(box => box.value);
+
+    const listing = {
+      id: Date.now(),
+      title: title.value,
+      price: price.value,
+      description: description.value,
+      platforms,
+      sold: false
+    };
+
+    savedListings.push(listing);
+    localStorage.setItem("ezListings", JSON.stringify(savedListings));
+
+    renderInventory();
+  }
+
+  function markSold(id) {
+    savedListings = savedListings.map(item => {
+      if (item.id === id) item.sold = true;
+      return item;
+    });
+
+    localStorage.setItem("ezListings", JSON.stringify(savedListings));
+    renderInventory();
+  }
+
+  function renderInventory() {
+    inventory.innerHTML = "";
+
+    savedListings.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "inventory-item" + (item.sold ? " sold" : "");
+
+      div.innerHTML = `
+        <h3>${item.title || "Untitled Listing"}</h3>
+        <p>$${item.price || "0"}</p>
+        <p>${item.description || ""}</p>
+        <p>Listed on: ${item.platforms.join(", ") || "None"}</p>
+        <button class="btn btn-secondary" onclick="markSold(${item.id})">
+          Mark Sold / Delist Everywhere
+        </button>
+      `;
+
+      inventory.appendChild(div);
+    });
+  }
+
+  title.addEventListener("input", updatePreview);
+  price.addEventListener("input", updatePreview);
+  description.addEventListener("input", updatePreview);
+  photos.addEventListener("change", previewImages);
+
+  document.querySelectorAll(".checks input").forEach(box => {
+    box.addEventListener("change", updatePreview);
+  });
+
+  renderInventory();
+</script>
 </body>
 </html>
