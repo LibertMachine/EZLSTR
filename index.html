@@ -3,191 +3,127 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EZ-LSTR | List Once. Sell Everywhere.</title>
+
+  <title>SynCell | Never Sell the Same Item Twice</title>
+  <meta name="description" content="SynCell helps resellers keep inventory synced across every marketplace so they never accidentally sell the same item twice." />
 
   <style>
     * { box-sizing: border-box; }
-.app-builder {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-}
 
-label {
-  display: block;
-  margin-top: 14px;
-  margin-bottom: 6px;
-  font-weight: 800;
-}
+    :root {
+      --bg: #07111c;
+      --panel: #0f1b29;
+      --panel-2: #132235;
+      --text: #f8fafc;
+      --muted: #b9c6d6;
+      --line: rgba(255,255,255,.12);
+      --cyan: #22d3ee;
+      --blue: #38bdf8;
+      --purple: #7c3aed;
+      --green: #5eead4;
+      --max: 1200px;
+    }
 
-input, textarea {
-  width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.06);
-  color: white;
-}
-
-textarea {
-  min-height: 120px;
-}
-
-.checks label {
-  font-weight: 500;
-}
-
-.preview-photos {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.preview-photos img {
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.inventory-item {
-  margin-top: 14px;
-  padding: 18px;
-  border-radius: 16px;
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.12);
-}
-
-.sold {
-  opacity: .45;
-  text-decoration: line-through;
-}
-
-@media (max-width: 850px) {
-  .app-builder {
-    grid-template-columns: 1fr;
-  }
-}
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: #0f1720;
-      color: #f8fafc;
+      background:
+        radial-gradient(circle at top right, rgba(34,211,238,.16), transparent 35%),
+        radial-gradient(circle at bottom left, rgba(124,58,237,.14), transparent 35%),
+        var(--bg);
+      color: var(--text);
       line-height: 1.6;
     }
 
     a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
 
     .nav {
-      padding: 18px 24px;
-      border-bottom: 1px solid rgba(255,255,255,.12);
-      background: rgba(15,23,32,.9);
       position: sticky;
       top: 0;
       z-index: 10;
+      background: rgba(7,17,28,.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
     }
 
     .nav-inner {
-      max-width: 1200px;
-      margin: auto;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 24px;
     }
 
     .logo {
-      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
       font-weight: 900;
-      letter-spacing: .05em;
+      font-size: 1.25rem;
+      letter-spacing: .03em;
     }
 
-    .logo span { color: #38bdf8; }
+    .logo img {
+      height: 42px;
+      width: auto;
+    }
 
     .nav-links {
       display: flex;
       gap: 22px;
-      color: #cbd5e1;
+      color: var(--muted);
       font-size: .95rem;
     }
 
+    .nav-links a:hover { color: var(--text); }
+
     .hero {
-      max-width: 1200px;
-      margin: auto;
-      padding: 90px 24px;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 90px 24px 70px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 50px;
+      gap: 56px;
       align-items: center;
     }
-<section id="app">
-  <h2 class="section-title">Create a Listing</h2>
 
-  <div class="app-builder">
-    <div class="card">
-      <label>Item Photos</label>
-      <input type="file" id="photos" multiple accept="image/*">
-
-      <label>Item Title</label>
-      <input type="text" id="title" placeholder="Vintage Nike Windbreaker">
-
-      <label>Price</label>
-      <input type="number" id="price" placeholder="42">
-
-      <label>Description</label>
-      <textarea id="description" placeholder="Describe condition, size, flaws, brand, color, etc."></textarea>
-
-      <label>Platforms</label>
-      <div class="checks">
-        <label><input type="checkbox" value="eBay"> eBay</label>
-        <label><input type="checkbox" value="Facebook"> Facebook</label>
-        <label><input type="checkbox" value="Mercari"> Mercari</label>
-        <label><input type="checkbox" value="Etsy"> Etsy</label>
-      </div>
-
-      <button class="btn btn-primary" onclick="saveListing()">Save Listing</button>
-    </div>
-
-    <div class="card">
-      <h3>Listing Preview</h3>
-      <div id="previewPhotos" class="preview-photos"></div>
-      <h2 id="previewTitle">Your item title</h2>
-      <p id="previewPrice">$0</p>
-      <p id="previewDescription">Your description will appear here.</p>
-      <p id="previewPlatforms">Platforms: none selected</p>
-    </div>
-  </div>
-
-  <h2 class="section-title">Inventory</h2>
-  <div id="inventory"></div>
-</section>
     .eyebrow {
-      color: #38bdf8;
+      color: var(--green);
       text-transform: uppercase;
       letter-spacing: .18em;
-      font-weight: 800;
-      font-size: .8rem;
-      margin-bottom: 16px;
+      font-size: .78rem;
+      font-weight: 900;
+      margin-bottom: 18px;
     }
 
     h1 {
-      font-size: clamp(3rem, 6vw, 5.8rem);
-      line-height: .9;
-      margin: 0 0 24px;
-      letter-spacing: -.06em;
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      line-height: .88;
+      letter-spacing: -.07em;
+      margin: 0 0 26px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--green), var(--blue), var(--purple));
+      -webkit-background-clip: text;
+      color: transparent;
     }
 
     .lead {
-      color: #cbd5e1;
+      color: var(--muted);
       font-size: 1.25rem;
-      max-width: 580px;
+      max-width: 590px;
+      margin-bottom: 28px;
     }
 
     .buttons {
       display: flex;
       gap: 14px;
       flex-wrap: wrap;
-      margin-top: 32px;
+      margin-top: 30px;
     }
 
     .btn {
@@ -197,77 +133,90 @@ textarea {
       padding: 15px 24px;
       border-radius: 14px;
       font-weight: 900;
-      border: 1px solid rgba(255,255,255,.15);
+      border: 1px solid var(--line);
+      cursor: pointer;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #38bdf8, #22c55e);
-      color: #07111c;
+      background: linear-gradient(135deg, var(--green), var(--blue), var(--purple));
+      color: #06111f;
+      box-shadow: 0 18px 45px rgba(56,189,248,.22);
     }
 
     .btn-secondary {
       background: rgba(255,255,255,.05);
-      color: #f8fafc;
+      color: var(--text);
     }
 
-    .app-card {
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      border: 1px solid rgba(255,255,255,.14);
-      border-radius: 28px;
+    .demo-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
+      border: 1px solid rgba(94,234,212,.18);
+      border-radius: 30px;
       padding: 24px;
       box-shadow: 0 30px 80px rgba(0,0,0,.35);
     }
 
-    .mockup {
-      background: #111827;
-      border-radius: 22px;
-      padding: 20px;
-      border: 1px solid rgba(255,255,255,.12);
-    }
-
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+    .demo-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       margin-bottom: 18px;
     }
 
-    .photo {
-      aspect-ratio: 1;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #334155, #1e293b);
+    .demo-header img {
+      height: 44px;
+    }
+
+    .product-box {
+      background: #101827;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 20px;
+    }
+
+    .mock-photo {
+      aspect-ratio: 16 / 10;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #1e293b, #334155);
       display: grid;
       place-items: center;
       color: #94a3b8;
-      font-weight: bold;
+      font-weight: 900;
+      margin-bottom: 16px;
     }
 
-    .field {
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 12px;
-      padding: 12px;
-      color: #cbd5e1;
-      margin-bottom: 10px;
+    .market-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
     }
+
+    .market-row:last-child { border-bottom: 0; }
+
+    .status-live { color: var(--green); font-weight: 900; }
+    .status-sold { color: var(--blue); font-weight: 900; }
+    .status-removed { color: #f87171; font-weight: 900; }
 
     section {
-      max-width: 1200px;
-      margin: auto;
-      padding: 70px 24px;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 72px 24px;
     }
 
     .section-title {
-      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
       line-height: 1;
       margin: 0 0 18px;
+      letter-spacing: -.04em;
     }
 
     .section-copy {
-      color: #cbd5e1;
+      color: var(--muted);
       max-width: 760px;
-      font-size: 1.1rem;
-      margin-bottom: 32px;
+      font-size: 1.12rem;
+      margin-bottom: 34px;
     }
 
     .grid-3 {
@@ -278,70 +227,101 @@ textarea {
 
     .card {
       background: rgba(255,255,255,.045);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 22px;
-      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 26px;
     }
 
-    .card h3 {
-      margin-top: 0;
-      color: #f8fafc;
-    }
-
-    .card p {
-      color: #cbd5e1;
-      margin-bottom: 0;
-    }
+    .card h3 { margin-top: 0; }
+    .card p { color: var(--muted); margin-bottom: 0; }
 
     .highlight {
-      background: linear-gradient(135deg, rgba(56,189,248,.16), rgba(34,197,94,.12));
-      border-top: 1px solid rgba(255,255,255,.12);
-      border-bottom: 1px solid rgba(255,255,255,.12);
       max-width: none;
+      background: linear-gradient(135deg, rgba(34,211,238,.14), rgba(124,58,237,.12));
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
     }
 
     .highlight-inner {
-      max-width: 1200px;
-      margin: auto;
-      padding: 70px 24px;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 76px 24px;
     }
 
-    .steps {
+    .sync-demo {
       display: grid;
       gap: 14px;
-      max-width: 800px;
+      max-width: 760px;
     }
 
-    .step {
-      padding: 18px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.12);
+    .sync-step {
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
       border-radius: 18px;
-      color: #cbd5e1;
+      padding: 18px;
+      color: var(--muted);
     }
 
-    .step strong {
-      color: #38bdf8;
+    .sync-step strong { color: var(--green); }
+
+    .app-builder {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    label {
+      display: block;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      font-weight: 800;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: white;
+      font: inherit;
+    }
+
+    textarea { min-height: 120px; }
+
+    .checks label { font-weight: 500; }
+
+    .inventory-item {
+      margin-top: 14px;
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--line);
+    }
+
+    .sold {
+      opacity: .55;
     }
 
     .cta {
       text-align: center;
       background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.12);
+      border: 1px solid var(--line);
       border-radius: 30px;
-      padding: 48px 24px;
+      padding: 52px 24px;
     }
 
     footer {
       text-align: center;
-      padding: 32px 24px;
+      padding: 34px 24px;
       color: #94a3b8;
-      border-top: 1px solid rgba(255,255,255,.12);
+      border-top: 1px solid var(--line);
     }
 
     @media (max-width: 850px) {
       .hero,
-      .grid-3 {
+      .grid-3,
+      .app-builder {
         grid-template-columns: 1fr;
       }
 
@@ -352,137 +332,186 @@ textarea {
       .hero {
         padding-top: 55px;
       }
+
+      h1 {
+        font-size: clamp(3.5rem, 17vw, 5.5rem);
+      }
+
+      .buttons,
+      .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<nav class="nav">
-  
-  <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#pricing">Pricing</a>
-  </div>
-</nav>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="logo" href="index.html">
+        <img src="syncell-icon.png" alt="SynCell icon">
+        <span>SynCell</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#problem">Problem</a>
+        <a href="#sync">Inventory Sync</a>
+        <a href="#app">Prototype</a>
+        <a href="#early-access">Early Access</a>
+      </div>
+    </div>
+  </nav>
 
   <main>
 
     <section class="hero">
       <div>
-        <div class="eyebrow">Marketplace listing made simple</div>
+        <div class="eyebrow">Inventory sync for modern resellers</div>
 
-        <h1>List once. Sell everywhere.</h1>
+        <h1>
+          Never sell<br>
+          the same item<br>
+          <span class="gradient-text">twice.</span>
+        </h1>
 
         <p class="lead">
-          EZ-LSTR helps resellers create one listing and push it across multiple marketplaces —
-          with one inventory system keeping everything organized.
+          SynCell helps resellers list products across marketplaces and automatically
+          keep inventory synchronized when something sells.
         </p>
 
         <div class="buttons">
-          <a class="btn btn-primary" href="#early-access">Join Early Access →</a>
-          <a class="btn btn-secondary" href="#how">See How It Works</a>
+          <a class="btn btn-primary" href="#app">Try the Prototype →</a>
+          <a class="btn btn-secondary" href="#sync">See Inventory Sync</a>
         </div>
       </div>
 
-      <div class="app-card">
-        <div class="mockup">
-          <div class="photo-grid">
-            <div class="photo">Photo</div>
-            <div class="photo">Photo</div>
-            <div class="photo">Photo</div>
+      <div class="demo-card">
+        <div class="demo-header">
+          <img src="syncell-icon.png" alt="SynCell icon">
+          <strong>Live Inventory Demo</strong>
+        </div>
+
+        <div class="product-box">
+          <div class="mock-photo">Vintage Nintendo 64</div>
+
+          <div class="market-row">
+            <span>eBay</span>
+            <span class="status-sold">SOLD</span>
           </div>
 
-          <div class="field">Title: Vintage Nike Windbreaker</div>
-          <div class="field">Price: $42.00</div>
-          <div class="field">Description generated and ready to edit...</div>
-          <div class="field">Platforms: eBay · Mercari · Etsy · Facebook</div>
+          <div class="market-row">
+            <span>Facebook Marketplace</span>
+            <span class="status-removed">REMOVED</span>
+          </div>
+
+          <div class="market-row">
+            <span>Mercari</span>
+            <span class="status-removed">REMOVED</span>
+          </div>
+
+          <div class="market-row">
+            <span>Etsy</span>
+            <span class="status-removed">REMOVED</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="how">
-      <h2 class="section-title">One listing. Multiple marketplaces.</h2>
+    <section id="problem">
+      <h2 class="section-title">The worst reseller message starts with “Sorry...”</h2>
       <p class="section-copy">
-        Stop rewriting the same listing over and over. EZ-LSTR gives sellers one simple workflow
-        for photos, titles, descriptions, pricing, and marketplace posting.
+        You sell an item on eBay, forget it is still listed on Facebook Marketplace,
+        and now someone else wants to buy it. SynCell is built to prevent that.
       </p>
 
       <div class="grid-3">
         <div class="card">
-          <h3>Upload Photos</h3>
-          <p>Take product photos once and keep them attached to one master listing.</p>
+          <h3>One item, too many listings</h3>
+          <p>Posting across platforms is powerful, but manually tracking each listing gets messy fast.</p>
         </div>
 
         <div class="card">
-          <h3>Write Once</h3>
-          <p>Create one title, description, condition note, price, and shipping detail.</p>
+          <h3>Manual delisting wastes time</h3>
+          <p>Every sale means checking every marketplace and removing old listings one by one.</p>
         </div>
 
         <div class="card">
-          <h3>Publish Faster</h3>
-          <p>Export or publish your listing to the platforms where your buyers already shop.</p>
+          <h3>Double-selling hurts trust</h3>
+          <p>Refunds, apology messages, and frustrated buyers are bad for sellers and their accounts.</p>
         </div>
       </div>
     </section>
 
-    <section id="inventory" class="highlight">
+    <section id="sync" class="highlight">
       <div class="highlight-inner">
-        <h2 class="section-title">The killer feature: inventory sync.</h2>
-
+        <h2 class="section-title">When it sells once, it updates everywhere.</h2>
         <p class="section-copy">
-          When an item sells on one marketplace, EZ-LSTR helps prevent the nightmare of selling
-          the same item twice somewhere else.
+          SynCell gives sellers one inventory source of truth across every connected marketplace.
         </p>
 
-        <div class="steps">
-          <div class="step"><strong>1.</strong> Item sells on eBay.</div>
-          <div class="step"><strong>2.</strong> EZ-LSTR marks the item as sold.</div>
-          <div class="step"><strong>3.</strong> Matching listings are removed or flagged on other platforms.</div>
-          <div class="step"><strong>4.</strong> No more “Sorry, it already sold.”</div>
+        <div class="sync-demo">
+          <div class="sync-step"><strong>1.</strong> Your item sells on eBay.</div>
+          <div class="sync-step"><strong>2.</strong> SynCell marks the master inventory item as sold.</div>
+          <div class="sync-step"><strong>3.</strong> Matching listings are removed or flagged everywhere else.</div>
+          <div class="sync-step"><strong>4.</strong> No more “Sorry, it already sold.”</div>
         </div>
       </div>
     </section>
 
-    <section id="pricing">
-      <h2 class="section-title">Built for casual sellers and power resellers.</h2>
+    <section id="app">
+      <h2 class="section-title">Try the prototype workflow.</h2>
       <p class="section-copy">
-        Start simple. Grow into a full reseller operating system.
+        Create a test listing, choose marketplaces, save it to inventory, then mark it sold.
       </p>
 
-      <div class="grid-3">
+      <div class="app-builder">
         <div class="card">
-          <h3>Starter</h3>
-          <p>For casual sellers testing the idea.</p>
-          <h2>Free</h2>
-          <p>Limited listings per month.</p>
+          <label>Item Photos</label>
+          <input type="file" id="photos" multiple accept="image/*">
+
+          <label>Item Title</label>
+          <input type="text" id="title" placeholder="Vintage Nike Windbreaker">
+
+          <label>Price</label>
+          <input type="number" id="price" placeholder="42">
+
+          <label>Description</label>
+          <textarea id="description" placeholder="Describe condition, size, flaws, brand, color, etc."></textarea>
+
+          <label>Platforms</label>
+          <div class="checks">
+            <label><input type="checkbox" value="eBay"> eBay</label>
+            <label><input type="checkbox" value="Facebook"> Facebook</label>
+            <label><input type="checkbox" value="Mercari"> Mercari</label>
+            <label><input type="checkbox" value="Etsy"> Etsy</label>
+          </div>
+
+          <button class="btn btn-primary" onclick="saveListing()">Save Listing</button>
         </div>
 
         <div class="card">
-          <h3>Seller</h3>
-          <p>For side hustlers and garage sale flippers.</p>
-          <h2>$19/mo</h2>
-          <p>More listings, templates, and exports.</p>
-        </div>
+          <h3>Listing Preview</h3>
+          <h2 id="previewTitle">Your item title</h2>
+          <p id="previewPrice">$0</p>
+          <p id="previewDescription">Your description will appear here.</p>
+          <p id="previewPlatforms">Platforms: none selected</p>
 
-        <div class="card">
-          <h3>Power Seller</h3>
-          <p>For serious resellers managing inventory daily.</p>
-          <h2>$49/mo</h2>
-          <p>Inventory sync, dashboard, and advanced tools.</p>
+          <h3>Inventory</h3>
+          <div id="inventory"></div>
         </div>
       </div>
     </section>
 
     <section id="early-access">
       <div class="cta">
-        <h2 class="section-title">Get early access to EZ-LSTR.</h2>
+        <h2 class="section-title">Want early access to SynCell?</h2>
         <p class="section-copy" style="margin-left:auto;margin-right:auto;">
-          Be first in line when the tool is ready for beta sellers.
+          Join the beta list for sellers who want one inventory across every marketplace.
         </p>
 
         <div class="buttons" style="justify-content:center;">
-          <a class="btn btn-primary" href="mailto:hello@ez-lstr.com">Request Early Access →</a>
+          <a class="btn btn-primary" href="mailto:hello@syncell.com">Request Early Access →</a>
         </div>
       </div>
     </section>
@@ -490,104 +519,91 @@ textarea {
   </main>
 
   <footer>
-    © 2026 EZ-LSTR · List Once. Sell Everywhere.
+    © 2026 SynCell · One Inventory. Every Marketplace.
   </footer>
-<script>
-  const title = document.getElementById("title");
-  const price = document.getElementById("price");
-  const description = document.getElementById("description");
-  const photos = document.getElementById("photos");
 
-  const previewTitle = document.getElementById("previewTitle");
-  const previewPrice = document.getElementById("previewPrice");
-  const previewDescription = document.getElementById("previewDescription");
-  const previewPlatforms = document.getElementById("previewPlatforms");
-  const previewPhotos = document.getElementById("previewPhotos");
-  const inventory = document.getElementById("inventory");
+  <script>
+    const title = document.getElementById("title");
+    const price = document.getElementById("price");
+    const description = document.getElementById("description");
+    const previewTitle = document.getElementById("previewTitle");
+    const previewPrice = document.getElementById("previewPrice");
+    const previewDescription = document.getElementById("previewDescription");
+    const previewPlatforms = document.getElementById("previewPlatforms");
+    const inventory = document.getElementById("inventory");
 
-  let savedListings = JSON.parse(localStorage.getItem("ezListings")) || [];
+    let savedListings = JSON.parse(localStorage.getItem("syncellListings")) || [];
 
-  function updatePreview() {
-    previewTitle.textContent = title.value || "Your item title";
-    previewPrice.textContent = "$" + (price.value || "0");
-    previewDescription.textContent = description.value || "Your description will appear here.";
+    function updatePreview() {
+      previewTitle.textContent = title.value || "Your item title";
+      previewPrice.textContent = "$" + (price.value || "0");
+      previewDescription.textContent = description.value || "Your description will appear here.";
 
-    const platforms = [...document.querySelectorAll(".checks input:checked")]
-      .map(box => box.value);
+      const platforms = [...document.querySelectorAll(".checks input:checked")]
+        .map(box => box.value);
 
-    previewPlatforms.textContent = "Platforms: " + (platforms.join(", ") || "none selected");
-  }
+      previewPlatforms.textContent = "Platforms: " + (platforms.join(", ") || "none selected");
+    }
 
-  function previewImages() {
-    previewPhotos.innerHTML = "";
+    function saveListing() {
+      const platforms = [...document.querySelectorAll(".checks input:checked")]
+        .map(box => box.value);
 
-    [...photos.files].slice(0, 6).forEach(file => {
-      const img = document.createElement("img");
-      img.src = URL.createObjectURL(file);
-      previewPhotos.appendChild(img);
+      const listing = {
+        id: Date.now(),
+        title: title.value,
+        price: price.value,
+        description: description.value,
+        platforms,
+        sold: false
+      };
+
+      savedListings.push(listing);
+      localStorage.setItem("syncellListings", JSON.stringify(savedListings));
+      renderInventory();
+    }
+
+    function markSold(id) {
+      savedListings = savedListings.map(item => {
+        if (item.id === id) item.sold = true;
+        return item;
+      });
+
+      localStorage.setItem("syncellListings", JSON.stringify(savedListings));
+      renderInventory();
+    }
+
+    function renderInventory() {
+      inventory.innerHTML = "";
+
+      savedListings.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "inventory-item" + (item.sold ? " sold" : "");
+
+        div.innerHTML = `
+          <h3>${item.title || "Untitled Listing"}</h3>
+          <p>$${item.price || "0"}</p>
+          <p>${item.description || ""}</p>
+          <p>Listed on: ${item.platforms.join(", ") || "None"}</p>
+          <button class="btn btn-secondary" onclick="markSold(${item.id})">
+            Mark Sold / Delist Everywhere
+          </button>
+        `;
+
+        inventory.appendChild(div);
+      });
+    }
+
+    title.addEventListener("input", updatePreview);
+    price.addEventListener("input", updatePreview);
+    description.addEventListener("input", updatePreview);
+
+    document.querySelectorAll(".checks input").forEach(box => {
+      box.addEventListener("change", updatePreview);
     });
-  }
-
-  function saveListing() {
-    const platforms = [...document.querySelectorAll(".checks input:checked")]
-      .map(box => box.value);
-
-    const listing = {
-      id: Date.now(),
-      title: title.value,
-      price: price.value,
-      description: description.value,
-      platforms,
-      sold: false
-    };
-
-    savedListings.push(listing);
-    localStorage.setItem("ezListings", JSON.stringify(savedListings));
 
     renderInventory();
-  }
+  </script>
 
-  function markSold(id) {
-    savedListings = savedListings.map(item => {
-      if (item.id === id) item.sold = true;
-      return item;
-    });
-
-    localStorage.setItem("ezListings", JSON.stringify(savedListings));
-    renderInventory();
-  }
-
-  function renderInventory() {
-    inventory.innerHTML = "";
-
-    savedListings.forEach(item => {
-      const div = document.createElement("div");
-      div.className = "inventory-item" + (item.sold ? " sold" : "");
-
-      div.innerHTML = `
-        <h3>${item.title || "Untitled Listing"}</h3>
-        <p>$${item.price || "0"}</p>
-        <p>${item.description || ""}</p>
-        <p>Listed on: ${item.platforms.join(", ") || "None"}</p>
-        <button class="btn btn-secondary" onclick="markSold(${item.id})">
-          Mark Sold / Delist Everywhere
-        </button>
-      `;
-
-      inventory.appendChild(div);
-    });
-  }
-
-  title.addEventListener("input", updatePreview);
-  price.addEventListener("input", updatePreview);
-  description.addEventListener("input", updatePreview);
-  photos.addEventListener("change", previewImages);
-
-  document.querySelectorAll(".checks input").forEach(box => {
-    box.addEventListener("change", updatePreview);
-  });
-
-  renderInventory();
-</script>
 </body>
 </html>
